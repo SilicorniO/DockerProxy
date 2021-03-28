@@ -1,0 +1,28 @@
+version: "3.5"
+
+services:
+    nginx:
+        container_name: proxy_nginx
+        build: nginx/.
+        environment:
+            DEBUG: $DEBUG
+            INSTANCES: $INSTANCES
+            CERTBOT_EMAILS: $CERTBOT_EMAILS
+        volumes:
+            - ./letsencrypt:/etc/letsencrypt
+            - ./logs:/var/log/letsencrypt
+        ports:
+            - 80:80/tcp
+            - 443:443/tcp
+        restart: unless-stopped
+        networks:
+            proxynet:
+                ipv4_address: 172.16.219.2
+
+networks:
+    proxynet:
+        name: proxy_network
+        ipam:
+            driver: default
+            config:
+                - subnet: 172.16.219.0/24
