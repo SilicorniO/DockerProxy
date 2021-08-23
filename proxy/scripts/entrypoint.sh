@@ -25,12 +25,15 @@ do
 
     echo "Configuring Domain: ${DOMAIN}, Ip: ${IP}, Port: ${PORT}"
     if [ "$HTTPS_ENABLED" = "true" ]; then
-        envsubst "\${DOMAIN},\${IP},\${PORT}" < "/conf/app_instance_https.conf" > "/etc/nginx/user.conf.d/app_${IP}.conf"
+        envsubst "\${DOMAIN},\${IP},\${PORT},\${NGINX_CONF}" < "/conf/app_instance_https.conf" > "/etc/nginx/user.conf.d/app_${IP}.conf"
 
     else
-        envsubst "\${DOMAIN},\${IP},\${PORT}" < "/conf/app_instance_http.conf" > "/etc/nginx/user.conf.d/app_${IP}.conf"
+        envsubst "\${DOMAIN},\${IP},\${PORT},\${NGINX_CONF}" < "/conf/app_instance_http.conf" > "/etc/nginx/user.conf.d/app_${IP}.conf"
 
     fi
+
+    echo "Configuration /etc/nginx/user.conf.d/app_${IP}.conf:"
+    cat "/etc/nginx/user.conf.d/app_${IP}.conf"
 done
 
 # copy certbot configuration if https is enabled
