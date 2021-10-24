@@ -11,6 +11,7 @@ services:
         volumes:
             - ./letsencrypt:/etc/letsencrypt
             - ./logs:/var/log/letsencrypt
+            - ./conf:/etc/nginx/user.conf.d
         ports:
             - 80:80/tcp
             - 443:443/tcp
