@@ -17,6 +17,7 @@ do
 
     # read domain
     export DOMAIN=${domainInfo[1]}
+    domainFilename="${DOMAIN//./_}"
 
     # read ip and port
     IFS=':' read -ra networkInfo <<< "${domainInfo[2]}"
@@ -25,15 +26,15 @@ do
 
     echo "Configuring Domain: ${DOMAIN}, Ip: ${IP}, Port: ${PORT}"
     if [ "$HTTPS_ENABLED" = "true" ]; then
-        envsubst "\${DOMAIN},\${IP},\${PORT},\${NGINX_CONF}" < "/conf/app_instance_https.conf" > "/etc/nginx/user.conf.d/app_${IP}.conf"
+        envsubst "\${DOMAIN},\${IP},\${PORT},\${NGINX_CONF}" < "/conf/app_instance_https.conf" > "/etc/nginx/user.conf.d/app_${domainFilename}_${IP}.conf"
 
     else
-        envsubst "\${DOMAIN},\${IP},\${PORT},\${NGINX_CONF}" < "/conf/app_instance_http.conf" > "/etc/nginx/user.conf.d/app_${IP}.conf"
+        envsubst "\${DOMAIN},\${IP},\${PORT},\${NGINX_CONF}" < "/conf/app_instance_http.conf" > "/etc/nginx/user.conf.d/app_${domainFilename}_${IP}.conf"
 
     fi
 
-    echo "Configuration /etc/nginx/user.conf.d/app_${IP}.conf:"
-    cat "/etc/nginx/user.conf.d/app_${IP}.conf"
+    echo "Configuration /etc/nginx/user.conf.d/app_${domainFilename}_${IP}.conf:"
+    cat "/etc/nginx/user.conf.d/app_${domainFilename}_${IP}.conf"
 done
 
 # copy certbot configuration if https is enabled
