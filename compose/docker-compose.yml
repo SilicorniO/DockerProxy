@@ -6,7 +6,7 @@ services:
         build: nginx/.
         environment:
             DEBUG: $DEBUG
-            INSTANCES: $INSTANCES
+            INSTANCES: $INST_TEST|$INST_TEST2
             CERTBOT_EMAILS: $CERTBOT_EMAILS
         volumes:
             - ./letsencrypt:/etc/letsencrypt
