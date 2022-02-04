@@ -1,2 +1,4 @@
 nginx/letsencrypt
 nginx/logs
+
+compose/*

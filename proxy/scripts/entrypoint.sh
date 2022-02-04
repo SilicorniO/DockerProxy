@@ -1,10 +1,11 @@
 #!/bin/bash
 
 # add all configuration files of instances
-echo "Configuring instances"
+echo "Configuring instances: $INSTANCES"
 instances=$(echo $INSTANCES | tr "|" "\n")
 for instance in $instances
 do
+    echo "Configuring instance: $instance"
     # split name and ips
     IFS=',' read -ra domainInfo <<< "${instance}"
 
