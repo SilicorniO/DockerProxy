@@ -1,4 +1,3 @@
-#staticfloat/nginx-certbot
 FROM nginx
 
 RUN apt update && apt install -y certbot
