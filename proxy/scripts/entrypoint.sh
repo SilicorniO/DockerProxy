@@ -27,11 +27,15 @@ do
 
     echo "Configuring Domain: ${DOMAIN}, Ip: ${IP}, Port: ${PORT}"
     if [ "$HTTPS_ENABLED" = "true" ]; then
-        envsubst "\${DOMAIN},\${IP},\${PORT},\${NGINX_CONF}" < "/conf/app_instance_https.conf" > "/etc/nginx/user.conf.d/app_${domainFilename}_${IP}.conf"
-
+       if [ ! -f "/etc/nginx/user.conf.d/app_${domainFilename}_${IP}.conf" ]; then
+           envsubst "\${DOMAIN},\${IP},\${PORT},\${NGINX_CONF}" < "/conf/app_instance_https.conf" > "/etc/nginx/user.conf.d/app_${domainFilename}_${IP}.conf"
+       fi
+ 
     else
-        envsubst "\${DOMAIN},\${IP},\${PORT},\${NGINX_CONF}" < "/conf/app_instance_http.conf" > "/etc/nginx/user.conf.d/app_${domainFilename}_${IP}.conf"
-
+       if [ ! -f "/etc/nginx/user.conf.d/app_${domainFilename}_${IP}.conf" ]; then
+           envsubst "\${DOMAIN},\${IP},\${PORT},\${NGINX_CONF}" < "/conf/app_instance_http.conf" > "/etc/nginx/user.conf.d/app_${domainFilename}_${IP}.conf"
+       fi
+ 
     fi
 
     echo "Configuration /etc/nginx/user.conf.d/app_${domainFilename}_${IP}.conf:"
