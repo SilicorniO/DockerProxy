@@ -116,7 +116,7 @@ move_certificates() {
     echo "Checking generated certificates of ${domain}"
 
     # get folders
-    dirs=($(ls $folder | grep $domain))
+    dirs=($(ls $folder | grep ^$domain))
     for dir in ${dirs[*]}; do
         
         # move certificates to original and delete folder
